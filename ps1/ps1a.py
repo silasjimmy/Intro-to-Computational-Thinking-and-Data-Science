@@ -66,9 +66,6 @@ def greedy_cow_transport(cows,limit=10):
         trips.append(trip)
     return trips
 
-c = {"Jesse":6, "Maybel": 3, "Callie": 2, "Maggie": 5}
-print(greedy_cow_transport(load_cows('ps1_cow_data_2.txt')))
-
 # Problem 3
 def brute_force_cow_transport(cows,limit=10):
     """
@@ -91,8 +88,24 @@ def brute_force_cow_transport(cows,limit=10):
     transported on a particular trip and the overall list containing all the
     trips
     """
-    # TODO: Your code here
-    pass
+    partitions = get_partitions(cows.keys())
+    less_trips = 0
+    best_trip = None
+    valid_trips = []
+    
+    for partition in partitions:
+        weights_in_each_trip = []
+        for combination in partition:
+            weights = [cows.get(name) for name in combination]
+            weights_in_each_trip.append(sum(weights))
+        if max(weights_in_each_trip) < limit:
+            valid_trips.append((partition, weights_in_each_trip))
+#    with_less_trips = [trip[0] for trip in valid_trips]
+    for trips in valid_trips:
+        print(trips)
+
+c = {"Jesse":6, "Maybel": 3, "Callie": 2, "Maggie": 5}
+print(brute_force_cow_transport(c))
         
 # Problem 4
 def compare_cow_transport_algorithms():
