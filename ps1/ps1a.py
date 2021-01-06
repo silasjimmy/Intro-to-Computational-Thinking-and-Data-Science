@@ -12,6 +12,7 @@ import time
 #================================
 
 # Problem 1
+
 def load_cows(filename):
     """
     Read the contents of the given file.  Assumes the file contents contain
@@ -24,8 +25,16 @@ def load_cows(filename):
     Returns:
     a dictionary of cow name (string), weight (int) pairs
     """
-    # TODO: Your code here
-    pass
+    cows = {}
+    
+    with open(filename) as f:
+        for line in f:
+            entry = line.strip()
+            entry = entry.split(sep=',')
+            cows[entry[0]] = int(entry[1])
+    return cows
+           
+print(load_cows('ps1_cow_data.txt'))
 
 # Problem 2
 def greedy_cow_transport(cows,limit=10):
