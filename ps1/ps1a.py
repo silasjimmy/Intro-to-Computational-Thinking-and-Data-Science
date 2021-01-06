@@ -11,17 +11,10 @@ import time
 # Part A: Transporting Space Cows
 #================================
 
-# Problem 1
-
 def load_cows(filename):
     """
-    Read the contents of the given file.  Assumes the file contents contain
-    data in the form of comma-separated cow name, weight pairs, and return a
-    dictionary containing cow names as keys and corresponding weights as values.
-
     Parameters:
     filename - the name of the data file as a string
-
     Returns:
     a dictionary of cow name (string), weight (int) pairs
     """
@@ -33,10 +26,9 @@ def load_cows(filename):
             entry = entry.split(sep=',')
             cows[entry[0]] = int(entry[1])
     return cows
-           
-print(load_cows('ps1_cow_data.txt'))
 
 # Problem 2
+
 def greedy_cow_transport(cows,limit=10):
     """
     Uses a greedy heuristic to determine an allocation of cows that attempts to
@@ -59,8 +51,23 @@ def greedy_cow_transport(cows,limit=10):
     transported on a particular trip and the overall list containing all the
     trips
     """
-    # TODO: Your code here
-    pass
+    trips = []
+    selected_cows = []
+    cows_copy = cows.copy()
+    
+    while cows_copy:
+        trip = []
+        rem_space = limit
+        for cow in cows:
+            if cows.get(cow) <= rem_space and cow not in selected_cows:
+                trip.append(cow)
+                selected_cows.append(cow)
+                rem_space -= cows_copy.pop(cow)
+        trips.append(trip)
+    return trips
+
+c = {"Jesse":6, "Maybel": 3, "Callie": 2, "Maggie": 5}
+print(greedy_cow_transport(load_cows('ps1_cow_data_2.txt')))
 
 # Problem 3
 def brute_force_cow_transport(cows,limit=10):
